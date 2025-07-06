@@ -7,19 +7,19 @@
   <style>
     body {
       font-family: 'Roboto', Arial, sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #fff);
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
       color: #333;
       margin: 0;
       padding: 0;
     }
 
     h1 {
-      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
       color: white;
       margin: 0;
       padding: 30px;
       text-align: center;
-      font-size: 28px;
+      font-size: 30px;
     }
 
     .container {
@@ -34,9 +34,9 @@
     }
 
     ul li {
-      background: #fff;
+      background: #ffffffcc;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.15);
       margin-bottom: 15px;
       padding: 15px 50px 15px 15px;
       position: relative;
@@ -44,7 +44,7 @@
     }
 
     ul li:hover {
-      transform: translateY(-2px);
+      transform: translateY(-4px);
     }
 
     ul li a {
@@ -53,29 +53,31 @@
     }
 
     ul li .delete-btn {
-      color: #e53935;
+      color: #ff1744;
       position: absolute;
       right: 15px;
       top: 15px;
+      font-size: 18px;
     }
 
     ul li .edit-btn {
-      color: #fbc02d;
+      color: #ffca28;
       position: absolute;
       right: 45px;
       top: 15px;
+      font-size: 18px;
     }
 
     p {
       text-align: center;
       font-size: 16px;
-      color: #555;
+      color: #444;
     }
 
     form {
-      background: #fff;
+      background: #ffffffcc;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.15);
       padding: 25px;
       margin-top: 30px;
     }
@@ -84,7 +86,7 @@
       display: block;
       margin-bottom: 10px;
       font-weight: bold;
-      color: #333;
+      color: #222;
     }
 
     input[type="text"],
@@ -92,12 +94,12 @@
       width: 100%;
       padding: 12px;
       margin-bottom: 15px;
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
       border-radius: 4px;
     }
 
     input[type="submit"] {
-      background: #4CAF50;
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
       color: white;
       border: none;
       padding: 12px 30px;
@@ -105,10 +107,11 @@
       cursor: pointer;
       font-weight: bold;
       font-size: 16px;
+      transition: background 0.3s ease;
     }
 
     input[type="submit"]:hover {
-      background: #45a049;
+      background: linear-gradient(90deg, #5b0ecb, #1b63e0);
     }
 
     .todo-image {
@@ -116,6 +119,33 @@
       max-width: 100px;
       margin: 10px 0;
       border-radius: 4px;
+    }
+
+    hr {
+      margin: 40px 0;
+      border: none;
+      border-top: 2px solid #ddd;
+    }
+
+    .poll-form label {
+      margin: 0 15px;
+      font-weight: normal;
+    }
+
+    .poll-form button {
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .poll-form button:hover {
+      background: linear-gradient(90deg, #5b0ecb, #1b63e0);
     }
   </style>
 </head>
@@ -125,7 +155,7 @@
 
   <div class="container">
     <ul>
-      <% todolist.forEach(function(todo, index) { %>
+      <% todolist.forEach((todo, index) => { %>
         <li>
           <a href="/todo/<%= index %>" class="edit-btn">✎</a>
           <a href="/todo/delete/<%= index %>" class="delete-btn">✘</a>
@@ -148,6 +178,42 @@
 
       <input type="submit" value="Add Task" />
     </form>
+
+    <hr />
+
+    <h2 style="text-align:center;">📣 Kaisa laga mera CI/CD project?</h2>
+    <form id="feedbackForm" class="poll-form" style="text-align:center;">
+      <label>
+        <input type="radio" name="feedback" value="Acha" required /> Acha
+      </label>
+      <label>
+        <input type="radio" name="feedback" value="Beka" /> Beka
+      </label>
+      <label>
+        <input type="radio" name="feedback" value="Bahut Badiya" /> Bahut Badiya
+      </label>
+      <label>
+        <input type="radio" name="feedback" value="None of these" /> None of these
+      </label>
+      <br /><br />
+      <button type="submit">Submit Feedback</button>
+    </form>
+
+    <p id="feedbackMessage" style="text-align:center; font-weight:bold; margin-top:10px;"></p>
   </div>
+
+  <script>
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbackMessage = document.getElementById('feedbackMessage');
+
+    feedbackForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="feedback"]:checked');
+      if (selected) {
+        feedbackMessage.textContent = `You selected: "${selected.value}" 🙌`;
+        feedbackMessage.style.color = '#2575fc';
+      }
+    });
+  </script>
 </body>
 </html>
